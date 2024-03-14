@@ -42,7 +42,18 @@
     (map-get? positions tx-sender)
 )
 
+(define-public (calTotalInterest) 
+ (begin 
+    (
+        let (
+            (totalInterest (+ (var-get shortPositionUSD) (* (var-get longPositionInToken) 
+        (unwrap! (contract-call? .pythmock readPriceFeed) err-unable-to-get-price))))
+      )
+        (ok totalInterest)
+    )
+ )
 
+)
 
 
 ;; public functions
@@ -57,7 +68,7 @@
   (
     let (
         ;;get the price of BTC
-        (price  (unwrap! (contract-call? .pythmock readPriceFeed) (err u7)))
+        (price  (unwrap! (contract-call? .pythmock readPriceFeed) err-unable-to-get-price))
         (amountInToken (/ (* btcSats positionSize) price))
         
         
@@ -106,18 +117,37 @@
             (collacteral (get deposistedCollateral userPosition))
             ;;get current price of BTC
             (currentBTCPrice (unwrap! (contract-call? .pythmock readPriceFeed ) err-unable-to-get-price))
-
+        
             ;;calculate the PNL
-
+           
            
         )
-        (ok true)
-     )
+         (if (is-eq positionType u1)
+           ;;calculate the value for shorts
+           (begin 
+              (
+                let (
+                    (pnl (/ (* (- currentBTCPrice buyPosition) amnountInToken) btcSats))
+                )
+                (if (> pnl u0)
+                  true    ;;dude has a profit here profit comes from the vault
+                 false ;;dude made a loss here loss goes to the vault
+                )
+                 (ok u1)
+              )
+
+             
+           )
+        
+               ;;long position
+               (ok u2)
+         )
+    
      
     )
   
   )
-
+)
 
 ;; read only functions
 ;;
