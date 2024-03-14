@@ -1,15 +1,15 @@
 (define-constant contractOwner tx-sender)
 (define-constant less-than-zero (err u100))
 (define-constant not-owner (err u101))
-(define-data-var btcPrice uint u60000000000000) ;;9 zeros decimal point
+(define-data-var btcPrice uint u60000000000) ;;6 digit decimal
 
 
 
 (define-public (readPriceFeed)
  (begin
     (if (is-eq (mod block-height u2) u0) 
-         (var-set btcPrice (+ u100000000000 (var-get btcPrice)))
-         (var-set btcPrice (- (var-get btcPrice) u50000000000))
+         (var-set btcPrice (+ u100000000 (var-get btcPrice)))
+         (var-set btcPrice (- (var-get btcPrice) u50000000))
     )
   (ok (var-get btcPrice))
  )
