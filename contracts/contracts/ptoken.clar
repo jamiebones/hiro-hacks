@@ -11,7 +11,7 @@
 )
 
 ;; token definitions //ten thousand total tokens;
-(define-fungible-token pToken u10000000000)
+(define-fungible-token pToken u10000000000000)
 
 ;; constants
 (define-constant contract-owner tx-sender)

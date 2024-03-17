@@ -4,8 +4,10 @@
    (define-constant insufficient-token-balance (err u201))
    (define-constant token-transfer-failed (err u202))
    (define-constant no-liquidity-for-payout (err u207))
+    (define-constant not-the-owner-error (err u400))
    (define-constant maxUtilizationPercentage u90)
 
+   
 
    (define-map balances principal uint )
    (define-data-var totalSupply uint u0)
@@ -48,19 +50,16 @@
         )
     )
 
-    (define-private (checkLiquidity)
-     (begin 
-
-       (
-        let (
-           (totalInterest (try! (contract-call? .perpsprotocol calTotalInterest )))
-           (totalDeposit  (unwrap! (contract-call? .ptoken get-balance (as-contract tx-sender)) (err u78)))
-        )
-        (asserts! (< totalInterest totalDeposit) no-liquidity-for-payout)
-        (ok true)
-       )
-     )
-    )
+    ;; (define-private (checkLiquidity)
+    ;;    (
+    ;;     let (
+    ;;        (totalInterest (try! (contract-call? .perpsprotocol calTotalInterest )))
+    ;;        (totalDeposit  (unwrap! (contract-call? .ptoken get-balance (as-contract tx-sender)) (err u78)))
+    ;;     )
+    ;;     (asserts! (< totalInterest totalDeposit) no-liquidity-for-payout)
+    ;;     (ok true)
+    ;;    )
+    ;; )
 
    
     ;;#[allow(unchecked_data)]
@@ -85,12 +84,25 @@
         
         )
     )
+
+    (define-public (payoutTokens (receiver principal) (amount uint))
+     (begin 
+        ;;(print (tx-sender))
+        (asserts! (is-eq contract-caller .perpsprotocol) not-the-owner-error )
+         (try! (contract-call? .ptoken transfer amount receiver .vault none))
+        (ok true)
+      )
+    
+    )
+
+
+
     
     ;;#[allow(unchecked_data)]
     (define-public (withdraw (shares uint) (receipient principal) (token <sip10-token>)) 
         (begin 
           (asserts! (> shares u0) less-than-zero-error)
-          (try! (checkLiquidity)) ;;check if we have liquidity
+          ;;(try! (checkLiquidity)) ;;check if we have liquidity
           (
             let (
                 (tokenBalance (try! (contract-call? token get-balance (as-contract tx-sender))))
