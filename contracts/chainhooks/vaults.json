@@ -4,7 +4,7 @@
   "name": "Vaults",
   "version": 1,
   "networks": {
-    "testnet": {
+    "devnet": {
       "if_this": {
         "scope": "contract_call",
         "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.vault",
@@ -12,7 +12,7 @@
       },
       "then_that": {
         "http_post": {
-        "url": "http://localhost:3000/api/v1/vaults",
+        "url": "http://localhost:3000/api/vault",
         "authorization_header": "Bearer jamiebones"
         }
       }
