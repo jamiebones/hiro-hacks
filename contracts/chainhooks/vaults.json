@@ -12,7 +12,8 @@
       },
       "then_that": {
         "http_post": {
-        "url": "http://localhost:3000/api/v1/vaults"
+        "url": "http://localhost:3000/api/v1/vaults",
+        "authorization_header": "Bearer jamiebones"
         }
       }
     }

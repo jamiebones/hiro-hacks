@@ -11,15 +11,29 @@ plan:
         - contract-publish:
             contract-name: ptoken
             expected-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
-            cost: 18790
+            cost: 18820
             path: contracts/ptoken.clar
+            anchor-block-only: true
+            clarity-version: 2
+        - contract-publish:
+            contract-name: pythmock
+            expected-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+            cost: 6330
+            path: contracts/pythmock.clar
             anchor-block-only: true
             clarity-version: 2
         - contract-publish:
             contract-name: vault
             expected-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
-            cost: 32570
+            cost: 41820
             path: contracts/vault.clar
+            anchor-block-only: true
+            clarity-version: 2
+        - contract-publish:
+            contract-name: perpsprotocol
+            expected-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
+            cost: 88530
+            path: contracts/perpsprotocol.clar
             anchor-block-only: true
             clarity-version: 2
       epoch: "2.4"
