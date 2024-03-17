@@ -87,9 +87,8 @@
 
     (define-public (payoutTokens (receiver principal) (amount uint))
      (begin 
-        ;;(print (tx-sender))
         (asserts! (is-eq contract-caller .perpsprotocol) not-the-owner-error )
-         (try! (contract-call? .ptoken transfer amount receiver .vault none))
+        (try! (as-contract (contract-call? .ptoken transfer amount .vault receiver  none)))
         (ok true)
       )
     
