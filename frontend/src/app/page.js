@@ -28,6 +28,7 @@ export default function Home() {
 
 
 
+
   const provideLiquidityToVault = () => {
     let amountToProvideAsLiquidity = liquidityAmount * 1000_000;
     amountToProvideAsLiquidity = uintCV(amountToProvideAsLiquidity);
@@ -45,6 +46,7 @@ export default function Home() {
 
       onFinish: data => {
         // WHEN user confirms pop-up
+        setLiquidityAmount(0)
         window
           .open(
             `http://localhost:8000/txid/${data.txId}?chain=testnet&api=http://localhost:3999`,
@@ -75,6 +77,7 @@ export default function Home() {
 
       onFinish: data => {
         // WHEN user confirms pop-up
+        setAmountToMint(0)
         window
           .open(
             `http://localhost:8000/txid/${data.txId}?chain=testnet&api=http://localhost:3999`,
@@ -95,36 +98,12 @@ export default function Home() {
     
   }
 
-  // useEffect(() => {
-  //   fetchDataFromWebHook()
-  // }, [pollData])
 
   useEffect(() => {
     setIsClient(true);
     
   }, []);
 
-  // const fetchDataFromWebHook = async () => {
-  //   const response = await fetch('/api/vault', { method: 'GET' });
-  //   const data = await response.json();
-  //   addToLocalStorage(data);
-  //   setDataFromWebhook(data);
-  //   //add to local storage
-  // }
-
-  // const addToLocalStorage = (newData) => {
-  //   //get the data if exist
-  //   if (newData) {
-  //     const chainHooksData = localStorage.getItem("chainhooksdata");
-  //     if (chainHooksData) {
-  //       let data = [JSON.parse(chainHooksData), newData]
-  //       localStorage.setItem("chainhooksdata", JSON.stringify(data))
-  //     } else {
-  //       localStorage.setItem("chainhooksdata", JSON.stringify(newData))
-  //     }
-  //   }
-
-  // }
 
   if (!isClient) return null;
 

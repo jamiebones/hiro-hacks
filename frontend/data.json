@@ -1,0 +1,236 @@
+[
+  {
+    "apply": [
+      {
+        "block_identifier": {
+          "index": 558,
+          "hash": "0x004b723264dbb9536aa49c166a5d36a9368fbe3e00d80bc2ad7c1cad38803946"
+        },
+        "parent_block_identifier": {
+          "index": 557,
+          "hash": "0x2b88507a5091a73c1bc2d0cb40e36ef678021b5ef53227ce25600a7fbdad7f11"
+        },
+        "timestamp": 1710759683,
+        "transactions": [
+          {
+            "transaction_identifier": {
+              "hash": "0xe86a641acb75ecef23193f7c0965345d44b35f9a775fd38c6b82ccf1644f5c63"
+            },
+            "operations": [
+              {
+                "operation_identifier": {
+                  "index": 0
+                },
+                "type": "CREDIT",
+                "status": "SUCCESS",
+                "account": {
+                  "address": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
+                },
+                "amount": {
+                  "value": 500000000,
+                  "currency": {
+                    "symbol": "TOKEN",
+                    "decimals": 6,
+                    "metadata": {
+                      "asset_class_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.ptoken::pToken",
+                      "asset_identifier": null,
+                      "standard": "SIP10"
+                    }
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "success": true,
+              "raw_tx": "0x808000000004006d78de7b0625dfbfc16c3a8a5735f6dc3dc3f2ce000000000000002300000000000010840000ac5f90842f367ae781ec341e6c8c75f4e78284077b35e4b6608d696caf5ed635578cfd262e85857a0441949687dd715a7b8848984128d8af30bf0bb3aeaa7a41030200000000021a6d78de7b0625dfbfc16c3a8a5735f6dc3dc3f2ce0670746f6b656e046d696e7400000002010000000000000000000000001dcd6500051a6d78de7b0625dfbfc16c3a8a5735f6dc3dc3f2ce",
+              "result": "(ok true)",
+              "sender": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+              "nonce": 35,
+              "fee": 4228,
+              "kind": {
+                "type": "ContractCall",
+                "data": {
+                  "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.ptoken",
+                  "method": "mint",
+                  "args": [
+                    "u500000000",
+                    "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
+                  ]
+                }
+              },
+              "receipt": {
+                "mutated_contracts_radius": [
+                  "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.ptoken"
+                ],
+                "mutated_assets_radius": [
+                  "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.ptoken::pToken"
+                ],
+                "contract_calls_stack": [],
+                "events": [
+                  {
+                    "type": "FTMintEvent",
+                    "data": {
+                      "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.ptoken::pToken",
+                      "recipient": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+                      "amount": "500000000"
+                    }
+                  }
+                ]
+              },
+              "description": "invoked: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.ptoken::mint(u500000000, ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM)",
+              "sponsor": null,
+              "execution_cost": {
+                "write_length": 1,
+                "write_count": 2,
+                "read_length": 2100,
+                "read_count": 5,
+                "runtime": 5918
+              },
+              "position": {
+                "index": 1
+              }
+            }
+          }
+        ],
+        "metadata": {
+          "bitcoin_anchor_block_identifier": {
+            "index": 660,
+            "hash": "0x57ccea537a5ae0077e17aab568050ea278b3d2701111e41ae6f0fc7bbe1869d5"
+          },
+          "pox_cycle_index": 55,
+          "pox_cycle_position": 9,
+          "pox_cycle_length": 10,
+          "confirm_microblock_identifier": null,
+          "stacks_block_hash": "0x0443807eadca88da82ef7870314bf593d5fc13f8081759827209fe89a9747c8c"
+        }
+      }
+    ],
+    "rollback": [],
+    "chainhook": {
+      "uuid": "4",
+      "predicate": {
+        "scope": "contract_call",
+        "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.ptoken",
+        "method": "mint"
+      },
+      "is_streaming_blocks": true
+    }
+  },
+  {
+    "apply": [
+      {
+        "block_identifier": {
+          "index": 565,
+          "hash": "0x981edbacc02727a61e4118b6f9d746a8067f047f903e599b06e95ca53df31ed7"
+        },
+        "parent_block_identifier": {
+          "index": 564,
+          "hash": "0x5279141ad7242fbf41594ab509779eeaf933e2873392a25faa48114ab0497362"
+        },
+        "timestamp": 1710760103,
+        "transactions": [
+          {
+            "transaction_identifier": {
+              "hash": "0x481e65fbb04ff3364a96cbd1038bf5a2ff93ddade154f13f442843f7b3646a6e"
+            },
+            "operations": [
+              {
+                "operation_identifier": {
+                  "index": 0
+                },
+                "type": "CREDIT",
+                "status": "SUCCESS",
+                "account": {
+                  "address": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
+                },
+                "amount": {
+                  "value": 50000000,
+                  "currency": {
+                    "symbol": "TOKEN",
+                    "decimals": 6,
+                    "metadata": {
+                      "asset_class_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.ptoken::pToken",
+                      "asset_identifier": null,
+                      "standard": "SIP10"
+                    }
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "success": true,
+              "raw_tx": "0x808000000004006d78de7b0625dfbfc16c3a8a5735f6dc3dc3f2ce00000000000000240000000000000d620001c857b740939369fea547f077b8806198d9fa4e0dba43747a68af52964be7deeb7ee92f70ccb94e1b4b79d86c79ef70604626ebe686e5ae4ca4bb904d69600640030200000000021a6d78de7b0625dfbfc16c3a8a5735f6dc3dc3f2ce0670746f6b656e046d696e74000000020100000000000000000000000002faf080051a6d78de7b0625dfbfc16c3a8a5735f6dc3dc3f2ce",
+              "result": "(ok true)",
+              "sender": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+              "nonce": 36,
+              "fee": 3426,
+              "kind": {
+                "type": "ContractCall",
+                "data": {
+                  "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.ptoken",
+                  "method": "mint",
+                  "args": [
+                    "u50000000",
+                    "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
+                  ]
+                }
+              },
+              "receipt": {
+                "mutated_contracts_radius": [
+                  "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.ptoken"
+                ],
+                "mutated_assets_radius": [
+                  "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.ptoken::pToken"
+                ],
+                "contract_calls_stack": [],
+                "events": [
+                  {
+                    "type": "FTMintEvent",
+                    "data": {
+                      "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.ptoken::pToken",
+                      "recipient": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+                      "amount": "50000000"
+                    }
+                  }
+                ]
+              },
+              "description": "invoked: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.ptoken::mint(u50000000, ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM)",
+              "sponsor": null,
+              "execution_cost": {
+                "write_length": 1,
+                "write_count": 2,
+                "read_length": 2100,
+                "read_count": 5,
+                "runtime": 5918
+              },
+              "position": {
+                "index": 1
+              }
+            }
+          }
+        ],
+        "metadata": {
+          "bitcoin_anchor_block_identifier": {
+            "index": 667,
+            "hash": "0x6cecc2dcd1f09fa6a6afdc5ae8d257e86c749667dc329029499eb9d56fb2b446"
+          },
+          "pox_cycle_index": 56,
+          "pox_cycle_position": 6,
+          "pox_cycle_length": 10,
+          "confirm_microblock_identifier": null,
+          "stacks_block_hash": "0xf3f2ae861dcf0b6bb1dc8232c532e3333d4827b122c3c4443c2ff5ab468b28c5"
+        }
+      }
+    ],
+    "rollback": [],
+    "chainhook": {
+      "uuid": "4",
+      "predicate": {
+        "scope": "contract_call",
+        "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.ptoken",
+        "method": "mint"
+      },
+      "is_streaming_blocks": true
+    }
+  }
+]

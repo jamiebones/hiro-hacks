@@ -1,3 +1,5 @@
+import { promises as fs } from 'fs';
+
 export async function POST(req) {
   const chunks = [];
   for await (const chunk of req.body) {
@@ -12,36 +14,59 @@ export async function POST(req) {
   }
 
   const decoder = new TextDecoder('utf-8');
-  const data = decoder.decode(buffer);
-   
-  let dataToClient = {}
-  if (data) {
-    const timestamp = data["apply"][0]["timestamp"]
-    const transactionType = data["apply"][0]["transactions"][0]["operations"][0]["type"]
-    const transactionStatus = data["apply"][0]["transactions"][0]["operations"][0]["status"]
-    const amountTransfered = data["apply"][0]["transactions"][0]["operations"][0]["amount"]["value"]
-    const receiver = data["apply"][0]["transactions"][0]["operations"][0]["account"]["address"]
-    const sender = data["apply"][0]["transactions"][0]["metadata"]["sender"]
-    const senderNonce = data["apply"][0]["transactions"][0]["metadata"]["nonce"]
-    const transFee = data["apply"][0]["transactions"][0]["metadata"]["fee"]
+  let data = decoder.decode(buffer);
+  data = JSON.parse(data)
 
-    const chainHookType = data["apply"][0]["transactions"][0]["metadata"]["kind"]
+const timestamp = data["apply"][0]["timestamp"]
+const transactionType = data["apply"][0]["transactions"][0]["operations"][0]["type"]
+const transactionStatus = data["apply"][0]["transactions"][0]["operations"][0]["status"]
+const amountTransfered = data["apply"][0]["transactions"][0]["operations"][0]["amount"]["value"]
+const receiver = data["apply"][0]["transactions"][0]["operations"][0]["account"]["address"]
+const sender = data["apply"][0]["transactions"][0]["metadata"]["sender"]
+const senderNonce = data["apply"][0]["transactions"][0]["metadata"]["nonce"]
+const transFee = data["apply"][0]["transactions"][0]["metadata"]["fee"]
 
-    dataToClient = {
-      timestamp,
-      transactionType,
-      transactionStatus,
-      amountTransfered,
-      receiver,
-      sender,
-      senderNonce,
-      transFee,
-      chainHookType
+const chainHookType = data["apply"][0]["transactions"][0]["metadata"]["kind"]
 
+const transData = {
+  timestamp,
+  transactionStatus,
+  transactionType,
+  amountTransfered,
+  receiver,
+  sender,
+  senderNonce,
+  transFee,
+  chainHookType
+
+}
+  console.log(transData)
+  let existingData;
+  try {
+    existingData = JSON.parse(await fs.readFile('data.json', 'utf-8')); // Read existing data
+  } catch (error) {
+    if (error.code === 'ENOENT') { // File doesn't exist, create it with empty array
+      existingData = [];
+    } else {
+      console.error(error);
+      return Response.status(500).json({ message: 'Error reading data' });
     }
   }
 
+  existingData.push(data); // Append new data to the array
 
-  console.log(dataToClient)
-  return Response.json(dataToClient);
+  await fs.writeFile('data.json', JSON.stringify(existingData, null, 2));
+  return Response.json(transData);
 }
+
+export async function GET(req, res) {
+      try {
+          const data = await fs.readFile('data.json', 'utf-8'); // Read file content
+          return Response.json(JSON.parse(data)); // Parse and send data
+      } catch (error) {
+          console.error(error);
+          return res.status(500).json({ message: 'Error reading data' });
+      }
+   
+  }
+
