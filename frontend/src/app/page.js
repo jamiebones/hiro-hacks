@@ -20,64 +20,13 @@ const tokenAddress = contractPrincipalCV(contractAddress, "ptoken")
 
 export default function Home() {
   const [isClient, setIsClient] = useState(false);
-  const [userTokenAmount, setUserTokenAmount] = useState(0)
   const [liquidityAmount, setLiquidityAmount] = useState(0)
   const [amountToMint, setAmountToMint] = useState(0)
-  const [receiverAddress, setReceiverAddress] = useState(null)
+  const [receiverAddress, setReceiverAddress] = useState(null);
 
-  const readTokenBalance = async () => {
-    const userTestnetAddress = userSession.loadUserData().profile.stxAddress.testnet;
-    console.log("userTestnet ", userTestnetAddress)
-    try {
-      const contractName = 'ptoken';
-      const functionName = 'get-balance';
-      const network = new StacksDevnet();
-      const senderAddress = userTestnetAddress;
-      const options = {
-        contractAddress,
-        contractName,
-        functionName,
-        functionArgs: [standardPrincipalCV(userTestnetAddress)],
-        network,
-        senderAddress,
-      };
-      const result = await callReadOnlyFunction(options);
-      const { value: { value } } = result
-      const tokenAmount = +value.toString() / 1_000_000
-      setUserTokenAmount(tokenAmount)
-      console.log("result => ", tokenAmount + "PT")
-    } catch (error) {
-      console.log("error => ", error);
-    }
-  };
 
-  // const checkIfisMember = async () => {
-  //   const userTestnetAddress = userSession.loadUserData().profile.stxAddress.testnet;
-  //   try {
-  //     const contractName = 'TokenGatedCommunity';
-  //     const functionName = 'isMember';
-  //     const network = new StacksTestnet();
-  //     const senderAddress = userTestnetAddress;
-  //     const options = {
-  //       contractAddress,
-  //       contractName,
-  //       functionName,
-  //       functionArgs: [standardPrincipalCV(userTestnetAddress)],
-  //       network,
-  //       senderAddress,
-  //     };
-  //     const result = await callReadOnlyFunction(options);
-  //     if (result.value.type == ClarityType.BoolFalse) {
-  //       console.log("not a member")
-  //       setIsCommunityMember(false);
-  //     } else if (result.value.type == ClarityType.BoolTrue) {
-  //       setIsCommunityMember(true);
-  //       console.log("Membership status established:")
-  //     }
-  //   } catch (error) {
-  //     console.log("error => ", error);
-  //   }
-  // };
+
+
 
   const provideLiquidityToVault = () => {
     let amountToProvideAsLiquidity = liquidityAmount * 1000_000;
@@ -142,18 +91,40 @@ export default function Home() {
 
   const handleLiquidityChange = (e) => {
     const { value } = e.target;
-    if (+value <= userTokenAmount) {
-      setLiquidityAmount(+value)
-    }
+    setLiquidityAmount(+value)
+    
   }
 
-  useEffect(() => {
-    readTokenBalance();
-  }, [])
+  // useEffect(() => {
+  //   fetchDataFromWebHook()
+  // }, [pollData])
 
   useEffect(() => {
     setIsClient(true);
+    
   }, []);
+
+  // const fetchDataFromWebHook = async () => {
+  //   const response = await fetch('/api/vault', { method: 'GET' });
+  //   const data = await response.json();
+  //   addToLocalStorage(data);
+  //   setDataFromWebhook(data);
+  //   //add to local storage
+  // }
+
+  // const addToLocalStorage = (newData) => {
+  //   //get the data if exist
+  //   if (newData) {
+  //     const chainHooksData = localStorage.getItem("chainhooksdata");
+  //     if (chainHooksData) {
+  //       let data = [JSON.parse(chainHooksData), newData]
+  //       localStorage.setItem("chainhooksdata", JSON.stringify(data))
+  //     } else {
+  //       localStorage.setItem("chainhooksdata", JSON.stringify(newData))
+  //     }
+  //   }
+
+  // }
 
   if (!isClient) return null;
 
@@ -174,17 +145,43 @@ export default function Home() {
       <main>
         <Navbar />
 
-        <div className="	flex justify-between">
-          <div className="flex flex-col">
-            <div className="bg-gray-200 p-4">
-              <p className="text-gray-800">
-                Token balance: {userTokenAmount} PT
-              </p>
+        <div className="flex">
+          <div className="flex-grow">
+            <div className="mt-6">
+
+              <p className="text-lg">Mint Token For Deployer</p>
+
+              <form className="flex max-w-md flex-col gap-4">
+                <div>
+                  <div className="mb-2 block">
+                    <Label htmlFor="amountToMint" value="Amount" />
+                  </div>
+                  <TextInput
+                    onChange={(e) => setAmountToMint(+e.target.value)}
+                    id="amountToMint"
+                    type="number"
+                    placeholder=""
+                    required
+                    value={amountToMint} />
+
+                  <div className="mb-2 block">
+                    <Label htmlFor="receiverAddress" value="Receiver Address" />
+                  </div>
+                  <TextInput
+                    onChange={(e) => setReceiverAddress(e.target.value)}
+                    id="receiverAddress"
+                    type="text"
+                    placeholder="standard principal address"
+                    required
+                    value={receiverAddress} />
+                </div>
+
+                <Button type="button" onClick={mintTokens}>Mint Token</Button>
+              </form>
             </div>
 
 
-
-            <div>
+            <div className="mt-6">
 
               <p className="text-lg">Provide Liquidity to Perps Protocol</p>
 
@@ -206,47 +203,27 @@ export default function Home() {
               </form>
             </div>
 
+
+
+
           </div>
+          <div className="flex-grow">
 
-          <div className="bg-red w-full">
 
-            <div>
 
-              <p className="text-lg">Mint Token For Deployer</p>
-
-              <form className="flex max-w-md flex-col gap-4">
-                <div>
-                  <div className="mb-2 block">
-                    <Label htmlFor="amountToMint" value="Amount" />
-                  </div>
-                  <TextInput
-                    onChange={(e)=>setAmountToMint(+e.target.value)}
-                    id="amountToMint"
-                    type="number"
-                    placeholder=""
-                    required
-                    value={amountToMint} />
-
-                  <div className="mb-2 block">
-                    <Label htmlFor="receiverAddress" value="Receiver Address" />
-                  </div>
-                  <TextInput
-                    onChange={(e)=>setReceiverAddress(e.target.value)}
-                    id="receiverAddress"
-                    type="text"
-                    placeholder="standard principal address"
-                    required
-                    value={receiverAddress} />
-                </div>
-
-                <Button type="button" onClick={mintTokens}>Mint Token</Button>
-              </form>
-            </div>
           </div>
+          <div className="flex-grow">
 
 
 
+          </div>
         </div>
+
+
+
+
+
+
 
 
 

@@ -1,5 +1,6 @@
 "use client"
 import ConnectWallet from "./ConnectWallet";
+import TokenComponent from "./TokenComponent";
 
 const Navbar = () => {
 
@@ -24,6 +25,10 @@ const Navbar = () => {
 
             <li>
                 <ConnectWallet />
+            </li>
+
+            <li className="float-right ml-auto">
+              <TokenComponent />
             </li>
         
           </ul>
