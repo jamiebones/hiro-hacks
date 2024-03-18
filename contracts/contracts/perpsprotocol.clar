@@ -98,9 +98,7 @@
     positionType: positionType, 
     amountInUSD: positionSize, 
     amountInToken: amountInToken})
-    
-    (print "investment made")
-    (print tx-sender)
+    (print "investment open")
     ;;transfer the tokens to the protocol
     (ok (try! (contract-call? .ptoken transfer (to-uint collateral) tx-sender .perpsprotocol none)))
   )

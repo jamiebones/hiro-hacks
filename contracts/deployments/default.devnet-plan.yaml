@@ -25,14 +25,14 @@ plan:
         - contract-publish:
             contract-name: vault
             expected-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
-            cost: 41820
+            cost: 42270
             path: contracts/vault.clar
             anchor-block-only: true
             clarity-version: 2
         - contract-publish:
             contract-name: perpsprotocol
             expected-sender: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM
-            cost: 88530
+            cost: 88260
             path: contracts/perpsprotocol.clar
             anchor-block-only: true
             clarity-version: 2

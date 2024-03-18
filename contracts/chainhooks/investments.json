@@ -1,0 +1,22 @@
+{
+    "chain": "stacks",
+    "uuid": "2",
+    "name": "Investment",
+    "version": 1,
+    "networks": {
+      "devnet": {
+        "if_this": {
+          "scope": "contract_call",
+          "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.vault",
+          "method": "depositLiquidity"
+        },
+        "then_that": {
+          "http_post": {
+          "url": "http://localhost:3000/api/vault",
+          "authorization_header": "Bearer jamiebones"
+          }
+        }
+      }
+     
+    }
+  }

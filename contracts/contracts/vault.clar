@@ -63,7 +63,7 @@
 
    
     ;;#[allow(unchecked_data)]
-    (define-public (deposit (amount uint) (token <sip10-token>)) 
+    (define-public (depositLiquidity (amount uint) (token <sip10-token>)) 
         (begin 
           (asserts! (> amount u0) less-than-zero-error)
           (asserts! (>= (try! (contract-call? token get-balance tx-sender)) amount) insufficient-token-balance)
@@ -80,7 +80,8 @@
                  )
             )
             
-          (contract-call? token transfer amount tx-sender (as-contract tx-sender) none)
+          (try! (contract-call? token transfer amount tx-sender (as-contract tx-sender) none))
+          (ok true)
         
         )
     )
@@ -98,7 +99,7 @@
 
     
     ;;#[allow(unchecked_data)]
-    (define-public (withdraw (shares uint) (receipient principal) (token <sip10-token>)) 
+    (define-public (withdrawLiquidity (shares uint) (receipient principal) (token <sip10-token>)) 
         (begin 
           (asserts! (> shares u0) less-than-zero-error)
           ;;(try! (checkLiquidity)) ;;check if we have liquidity
