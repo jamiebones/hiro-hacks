@@ -232,5 +232,206 @@
       },
       "is_streaming_blocks": true
     }
+  },
+  {
+    "apply": [
+      {
+        "block_identifier": {
+          "index": 673,
+          "hash": "0x5f77652b86b3ac68a1db84fc9d951014c44477179c726186dea003d30763ad2b"
+        },
+        "parent_block_identifier": {
+          "index": 672,
+          "hash": "0x68acc1a54a5daa0c58fe81293ca112c21172f3908df10df6a02667a8151d142a"
+        },
+        "timestamp": 1710807886,
+        "transactions": [
+          {
+            "transaction_identifier": {
+              "hash": "0x8dda0e5f88ffa6371f0d010d68d883d798b9ef3d541b356964c5c019a8360229"
+            },
+            "operations": [
+              {
+                "operation_identifier": {
+                  "index": 0
+                },
+                "related_operations": [
+                  {
+                    "index": 1
+                  }
+                ],
+                "type": "DEBIT",
+                "status": "SUCCESS",
+                "account": {
+                  "address": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM"
+                },
+                "amount": {
+                  "value": 300000000,
+                  "currency": {
+                    "symbol": "TOKEN",
+                    "decimals": 6,
+                    "metadata": {
+                      "asset_class_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.ptoken::pToken",
+                      "asset_identifier": null,
+                      "standard": "SIP10"
+                    }
+                  }
+                }
+              },
+              {
+                "operation_identifier": {
+                  "index": 1
+                },
+                "related_operations": [
+                  {
+                    "index": 0
+                  }
+                ],
+                "type": "CREDIT",
+                "status": "SUCCESS",
+                "account": {
+                  "address": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.perpsprotocol"
+                },
+                "amount": {
+                  "value": 300000000,
+                  "currency": {
+                    "symbol": "TOKEN",
+                    "decimals": 6,
+                    "metadata": {
+                      "asset_class_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.ptoken::pToken",
+                      "asset_identifier": null,
+                      "standard": "SIP10"
+                    }
+                  }
+                }
+              }
+            ],
+            "metadata": {
+              "success": true,
+              "raw_tx": "0x808000000004006d78de7b0625dfbfc16c3a8a5735f6dc3dc3f2ce00000000000000260000000000000bb80000e53ed72ad197d1cb235daa466987239eece3f011b749b694f7307303ef1119755f2bdeb3d54556cf101a51cb1e7e67cdf02f4f381d6ded5dd0d95fef50c31407030100000000021a6d78de7b0625dfbfc16c3a8a5735f6dc3dc3f2ce0d706572707370726f746f636f6c0c6f70656e506f736974696f6e0000000300000000000000000000000000b2d05e000000000000000000000000000011e1a3000000000000000000000000000000000002",
+              "result": "(ok true)",
+              "sender": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+              "nonce": 38,
+              "fee": 3000,
+              "kind": {
+                "type": "ContractCall",
+                "data": {
+                  "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.perpsprotocol",
+                  "method": "openPosition",
+                  "args": [
+                    "3000000000",
+                    "300000000",
+                    "2"
+                  ]
+                }
+              },
+              "receipt": {
+                "mutated_contracts_radius": [
+                  "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.ptoken",
+                  "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.perpsprotocol"
+                ],
+                "mutated_assets_radius": [
+                  "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.ptoken::pToken"
+                ],
+                "contract_calls_stack": [],
+                "events": [
+                  {
+                    "type": "FTTransferEvent",
+                    "data": {
+                      "asset_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.ptoken::pToken",
+                      "sender": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM",
+                      "recipient": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.perpsprotocol",
+                      "amount": "300000000"
+                    }
+                  },
+                  {
+                    "type": "DataVarSetEvent",
+                    "data": {
+                      "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.pythmock",
+                      "var": "btcPrice",
+                      "raw_new_value": "0x0000000000000000000000000df54c6780"
+                    }
+                  },
+                  {
+                    "type": "DataMapUpdateEvent",
+                    "data": {
+                      "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.perpsprotocol",
+                      "map": "positions",
+                      "raw_key": "0x051a6d78de7b0625dfbfc16c3a8a5735f6dc3dc3f2ce",
+                      "raw_new_value": "0x0c000000050d616d6f756e74496e546f6b656e00000000000000000000000000004c6bdb0b616d6f756e74496e55534400000000000000000000000000b2d05e000862757950726963650000000000000000000000000df2517700146465706f736973746564436f6c6c61746572616c0000000000000000000000000011e1a3000c706f736974696f6e547970650000000000000000000000000000000002"
+                    }
+                  },
+                  {
+                    "type": "DataVarSetEvent",
+                    "data": {
+                      "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.pythmock",
+                      "var": "btcPrice",
+                      "raw_new_value": "0x0000000000000000000000000df2517700"
+                    }
+                  },
+                  {
+                    "type": "DataVarSetEvent",
+                    "data": {
+                      "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.perpsprotocol",
+                      "var": "longPositionInToken",
+                      "raw_new_value": "0x00000000000000000000000000004c6bdc"
+                    }
+                  },
+                  {
+                    "type": "SmartContractEvent",
+                    "data": {
+                      "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.perpsprotocol",
+                      "topic": "print",
+                      "raw_value": "0x0d0000000f696e766573746d656e74206f70656e"
+                    }
+                  },
+                  {
+                    "type": "DataVarSetEvent",
+                    "data": {
+                      "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.perpsprotocol",
+                      "var": "longPositionUSD",
+                      "raw_new_value": "0x00000000000000000000000000b2d05e01"
+                    }
+                  }
+                ]
+              },
+              "description": "invoked: ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.perpsprotocol::openPosition(3000000000, 300000000, 2)",
+              "sponsor": null,
+              "execution_cost": {
+                "write_length": 256,
+                "write_count": 7,
+                "read_length": 14964,
+                "read_count": 34,
+                "runtime": 51276
+              },
+              "position": {
+                "index": 1
+              }
+            }
+          }
+        ],
+        "metadata": {
+          "bitcoin_anchor_block_identifier": {
+            "index": 775,
+            "hash": "0x30d992284b65f35fd22ff23e06090af0de5f9c73f0909fd745a5e473b018a7cf"
+          },
+          "pox_cycle_index": 67,
+          "pox_cycle_position": 4,
+          "pox_cycle_length": 10,
+          "confirm_microblock_identifier": null,
+          "stacks_block_hash": "0x987ee80fe10be9c1b8437bd39c888f5cdf17fc1f172b465794f356cb7d236eb8"
+        }
+      }
+    ],
+    "rollback": [],
+    "chainhook": {
+      "uuid": "3",
+      "predicate": {
+        "scope": "contract_call",
+        "contract_identifier": "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.perpsprotocol",
+        "method": "openPosition"
+      },
+      "is_streaming_blocks": true
+    }
   }
 ]

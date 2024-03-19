@@ -6,12 +6,12 @@ import { userSession } from "../components/ConnectWallet";
 import { StacksDevnet } from "@stacks/network";
 import {
   callReadOnlyFunction, standardPrincipalCV, ClarityType, AnchorMode,
-  PostConditionMode, contractPrincipalCV, uintCV
+  PostConditionMode, contractPrincipalCV, uintCV, intCV
 } from '@stacks/transactions';
 import { openContractCall } from '@stacks/connect';
 import Navbar from "@/components/Navbar";
 const contractAddress = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM";
-import { Button, Label, TextInput } from 'flowbite-react';
+import { Button, Label, TextInput, Dropdown } from 'flowbite-react';
 
 
 
@@ -23,7 +23,13 @@ export default function Home() {
   const [liquidityAmount, setLiquidityAmount] = useState(0)
   const [amountToMint, setAmountToMint] = useState(0)
   const [receiverAddress, setReceiverAddress] = useState(null);
-
+  const [paymentAddress, setPaymentAddress] = useState(null);
+  const [sharesToWithdraw, setSharesToWithdraw] = useState(0)
+  const [openPositionObject, setOpenPositionObject] = useState({
+    positionSize: 0,
+    collateral: 0,
+    positionType: 0
+  })
 
 
 
@@ -92,16 +98,91 @@ export default function Home() {
     });
   }
 
+  const withdrawLiquidity = () => {
+    let amount = sharesToWithdraw * 1000_000;
+    amount = uintCV(amount);
+    openContractCall({
+      network: new StacksDevnet(),
+      anchorMode: AnchorMode.Any, // which type of block the tx should be mined in
+      contractAddress: contractAddress,
+      contractName: 'vault',
+      functionName: 'withdrawLiquidity',
+      functionArgs: [amount, standardPrincipalCV(paymentAddress), tokenAddress],
+
+      postConditionMode: PostConditionMode.Allow, // 
+      postConditions: [], // for an example using post-conditions, see next example
+
+      onFinish: data => {
+        // WHEN user confirms pop-up
+        setSharesToWithdraw(0);
+        setPaymentAddress(null)
+        window
+          .open(
+            `http://localhost:8000/txid/${data.txId}?chain=testnet&api=http://localhost:3999`,
+            "_blank"
+          )
+          .focus();
+      },
+      onCancel: () => {
+        // WHEN user cancels/closes pop-up
+        console.log("onCancel:", "Transaction was canceled");
+      },
+    });
+  }
+
+  const openPosition = () => {
+    let collacteral = +openPositionObject.collateral;
+    let positionSize = +openPositionObject.positionSize;
+    let positionType = +openPositionObject.positionType
+    if (collacteral == 0 || positionSize == 0 || positionType == 0) return;
+    collacteral = collacteral * 1000_000;
+    collacteral = intCV(collacteral);
+    positionSize = positionSize * 1000_000;
+    positionSize = intCV(positionSize);
+    positionType = intCV(positionType)
+    openContractCall({
+      network: new StacksDevnet(),
+      anchorMode: AnchorMode.Any, // which type of block the tx should be mined in
+      contractAddress: contractAddress,
+      contractName: 'perpsprotocol',
+      functionName: 'openPosition',
+      functionArgs: [positionSize, collacteral, positionType],
+
+      postConditionMode: PostConditionMode.Allow, // 
+      postConditions: [], // for an example using post-conditions, see next example
+
+      onFinish: data => {
+        // WHEN user confirms pop-up
+        setOpenPositionObject({
+          positionSize: 0,
+          positionType: 0,
+          collateral: 0
+        })
+        window
+          .open(
+            `http://localhost:8000/txid/${data.txId}?chain=testnet&api=http://localhost:3999`,
+            "_blank"
+          )
+          .focus();
+      },
+      onCancel: () => {
+        // WHEN user cancels/closes pop-up
+        console.log("onCancel:", "Transaction was canceled");
+      },
+    });
+  }
+
+
   const handleLiquidityChange = (e) => {
     const { value } = e.target;
     setLiquidityAmount(+value)
-    
+
   }
 
 
   useEffect(() => {
     setIsClient(true);
-    
+
   }, []);
 
 
@@ -183,19 +264,86 @@ export default function Home() {
             </div>
 
 
+            <div className="mt-6 mb-6">
+              <p className="text-lg">Withdraw Liquidity from Vault</p>
 
+              <form className="flex max-w-md flex-col gap-4">
+                <div>
+                  <div className="mb-2 block">
+                    <Label htmlFor="shares" value="Shares to Withdraw" />
+                  </div>
+                  <TextInput
+                    onChange={(e) => setSharesToWithdraw(+e.target.value)}
+                    id="shares"
+                    type="number"
+                    placeholder=""
+                    required
+                    value={sharesToWithdraw} />
 
+                  <div className="mb-2 block">
+                    <Label htmlFor="paymentAddress" value="Payment Address" />
+                  </div>
+                  <TextInput
+                    onChange={(e) => setPaymentAddress(e.target.value)}
+                    id="paymentAddress"
+                    type="text"
+                    placeholder="standard principal address"
+                    required
+                    value={paymentAddress} />
+                </div>
+
+                <Button type="button" onClick={withdrawLiquidity}>Withdraw Liquidity</Button>
+              </form>
+            </div>
           </div>
+
           <div className="flex-grow">
+            <div className="mt-6 mb-6">
+              <p className="text-lg">Open BTC Short/Long Position</p>
 
+              <form className="flex max-w-md flex-col gap-4">
+                <div>
+                  <div className="mb-2 block">
+                    <Label htmlFor="positionSize" value="Position Size" />
+                  </div>
+                  <TextInput
+                    onChange={(e) => setOpenPositionObject({ ...openPositionObject, positionSize: e.target.value })}
+                    id="positionSize"
+                    type="number"
+                    placeholder="0"
+                    required
+                    value={openPositionObject.positionSize} />
+
+                  <div className="mb-2 block">
+                    <Label htmlFor="collacteral" value="Deposisted Collateral" />
+                  </div>
+                  <TextInput
+                    onChange={(e) => setOpenPositionObject({ ...openPositionObject, collateral: e.target.value })}
+                    id="collacteral"
+                    type="number"
+                    placeholder="0"
+                    required
+                    value={openPositionObject.collateral} />
+
+                  <div className="mb-2 block">
+                    <Label htmlFor="positionType" value="Position Type" />
+                  </div>
+
+                  <select
+                    onChange={(e) => setOpenPositionObject({ ...openPositionObject, positionType: e.target.value })}>
+                    <option value="0">Select Position</option>
+                    <option value="2">Long Position</option>
+                    <option value="1">Short Position</option>
+                  </select>
+                </div>
+
+                <Button type="button" onClick={openPosition}>Open Position</Button>
+              </form>
+            </div>
 
 
           </div>
-          <div className="flex-grow">
 
-
-
-          </div>
         </div>
 
 
