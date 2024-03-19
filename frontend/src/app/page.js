@@ -11,7 +11,7 @@ import {
 import { openContractCall } from '@stacks/connect';
 import Navbar from "@/components/Navbar";
 const contractAddress = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM";
-import { Button, Label, TextInput, Dropdown } from 'flowbite-react';
+import { Button, Label, TextInput } from 'flowbite-react';
 
 
 
@@ -30,7 +30,7 @@ export default function Home() {
     collateral: 0,
     positionType: 0
   })
-
+  const [liquidateAddress, setLiquidateAddress] = useState(null);
 
 
 
@@ -158,6 +158,36 @@ export default function Home() {
           positionType: 0,
           collateral: 0
         })
+        window
+          .open(
+            `http://localhost:8000/txid/${data.txId}?chain=testnet&api=http://localhost:3999`,
+            "_blank"
+          )
+          .focus();
+      },
+      onCancel: () => {
+        // WHEN user cancels/closes pop-up
+        console.log("onCancel:", "Transaction was canceled");
+      },
+    });
+  }
+
+  const liquidatePosition = () => {
+    if (!liquidateAddress) return;
+    openContractCall({
+      network: new StacksDevnet(),
+      anchorMode: AnchorMode.Any, // which type of block the tx should be mined in
+      contractAddress: contractAddress,
+      contractName: 'perpsprotocol',
+      functionName: 'liquidatePosition',
+      functionArgs: [standardPrincipalCV(liquidateAddress)],
+
+      postConditionMode: PostConditionMode.Allow, // 
+      postConditions: [], // for an example using post-conditions, see next example
+
+      onFinish: data => {
+        // WHEN user confirms pop-up
+       setLiquidateAddress(null)
         window
           .open(
             `http://localhost:8000/txid/${data.txId}?chain=testnet&api=http://localhost:3999`,
@@ -340,6 +370,30 @@ export default function Home() {
                 <Button type="button" onClick={openPosition}>Open Position</Button>
               </form>
             </div>
+
+
+            <div className="mt-6 mb-6">
+              <p className="text-lg">Liquidate Position</p>
+
+              <form className="flex max-w-md flex-col gap-4">
+                <div>
+                  <div className="mb-2 block">
+                    <Label htmlFor="liquidate" value="Principal Address" />
+                  </div>
+                  <TextInput
+                    onChange={(e) => setLiquidateAddress(e.target.value)}
+                    id="liquidate"
+                    type="text"
+                    placeholder="account to liquidate"
+                    required
+                    value={liquidateAddress} />
+
+                </div>
+
+                <Button type="button" onClick={liquidatePosition}>Liquidate Position</Button>
+              </form>
+            </div>
+
 
 
           </div>
