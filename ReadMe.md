@@ -36,4 +36,6 @@ Three chainhooks are setup for contract call for when a user is minting, deposit
 
 
 **Limitation**
+This is my first stab at the Clarity smart contract language; my code quality is a little over the place. The implementation of what I tried to make is somehow limited. I will update this repo as I learn more about Clarity. 
+
 
