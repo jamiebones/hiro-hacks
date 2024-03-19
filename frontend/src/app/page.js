@@ -12,10 +12,10 @@ import { openContractCall } from '@stacks/connect';
 import Navbar from "@/components/Navbar";
 const contractAddress = "ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM";
 import { Button, Label, TextInput } from 'flowbite-react';
+import { DevNetDeployer, TestnetDeployer } from "@/util";
 
 
-
-const tokenAddress = contractPrincipalCV(contractAddress, "ptoken")
+const tokenAddress = contractPrincipalCV(DevNetDeployer, "ptoken")
 
 
 export default function Home() {
